@@ -1,0 +1,4 @@
+# RubyGems-related
+.bundle/
+Gemfile.lock
+vendor/
