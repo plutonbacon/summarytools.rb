@@ -21,4 +21,8 @@ describe '.descr' do
     expect(ss[:median]).to eq(3)
   end
 
+  it 'computes the correct median absolute deviation of the simple array = [1, 2, 3, 4, 5]' do
+    expect(ss[:mad]).to eq(1)
+  end
+
 end

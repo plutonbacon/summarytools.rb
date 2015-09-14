@@ -9,6 +9,15 @@ module SummaryTools
       }
     end # def check_type
 
+    def compute_mad(array)
+      absdev = []
+      median = compute_median(array)
+      array.each {|n|
+        absdev.push((n-median).abs)
+      }
+      return compute_median(absdev)
+    end # def compute_mad
+
     def sdaccum
       n, sum, sum2 = 0, 0.0, 0.0
       lambda do |num|
@@ -39,6 +48,7 @@ module SummaryTools
       stats[:min] = array.min
       stats[:max] = array.max
       stats[:median] = compute_median(array)
+      stats[:mad] = compute_mad(array)
       return stats
     end # def perform
 
