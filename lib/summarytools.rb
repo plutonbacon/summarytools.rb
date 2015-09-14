@@ -4,6 +4,10 @@ require 'summarytools/describer'
 module SummaryTools
   class << self
 
+    # Generates common central tendency statistics and measures of
+    # dispersion for numerical data.
+    #
+    # @return [Hash]
     def descr(array)
       d = Describer.new
       d.perform(array)

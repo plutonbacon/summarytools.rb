@@ -9,6 +9,16 @@ module SummaryTools
       }
     end # def check_type
 
+    def sdaccum
+      n, sum, sum2 = 0, 0.0, 0.0
+      lambda do |num|
+        n += 1
+        sum += num
+        sum2 += num**2
+        Math.sqrt((sum2/n)-(sum/n)**2)
+      end
+    end # def sdaccum
+
     def compute_median(array)
       mid = array.length / 2
       sorted = array.sort
@@ -19,9 +29,15 @@ module SummaryTools
       check_type(array)
 
       stats = {}
+      stats[:mean] = array.inject(:+).to_f / array.length
+
+      sd = sdaccum
+      tmp = []
+      array.each {|n| tmp.push(sd.call(n))}
+      stats[:stddev] = tmp.last
+
       stats[:min] = array.min
       stats[:max] = array.max
-      stats[:mean] = array.inject(:+).to_f / array.length
       stats[:median] = compute_median(array)
       return stats
     end # def perform
