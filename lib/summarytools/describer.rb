@@ -58,20 +58,21 @@ module SummaryTools
 
     def describe
       stats = {}
-      stats[:mean] = @array.inject(:+).to_f / @array.length
+      stats[:mean]   = @array.inject(:+).to_f / @array.length
 
       sd = sdaccum
       tmp = []
       @array.each {|n| tmp.push(sd.call(n))}
-      stats[:stddev] = tmp.last
 
-      stats[:min] = @array.min
-      stats[:max] = @array.max
+      stats[:stddev] = tmp.last
+      stats[:min]    = @array.min
+      stats[:max]    = @array.max
       stats[:median] = compute_median(@array)
-      stats[:mad] = compute_mad
-      stats[:iqr] = compute_iqr
+      stats[:mad]    = compute_mad
+      stats[:iqr]    = compute_iqr
+      stats[:cv]     = stats[:stddev] / stats[:mean].abs
       return stats
-    end # def perform
+    end # def describe
 
     public(:initialize, :describe)
   end # class Describer

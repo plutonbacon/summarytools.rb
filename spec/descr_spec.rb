@@ -29,4 +29,8 @@ describe '.descr' do
     expect(ss[:iqr]).to eq(2)
   end
 
+  it 'computes the correct coefficient of variation of the simple array = [1, 2, 3, 4, 5]' do
+    expect(ss[:cv]).to eq(0.47140452079103173)
+  end
+
 end
