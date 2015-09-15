@@ -25,4 +25,8 @@ describe '.descr' do
     expect(ss[:mad]).to eq(1)
   end
 
+  it 'computes the correct interquartile range of the simple array = [1, 2, 3, 4, 5]' do
+    expect(ss[:iqr]).to eq(2)
+  end
+
 end

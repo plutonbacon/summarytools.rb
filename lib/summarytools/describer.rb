@@ -1,7 +1,14 @@
 module SummaryTools
   class Describer
 
+    attr_reader :array
+
     private
+
+    def initialize(_array)
+      check_type(_array)
+      @array = _array
+    end # def initialize
 
     def check_type(array)
       array.each { |e|
@@ -9,10 +16,25 @@ module SummaryTools
       }
     end # def check_type
 
-    def compute_mad(array)
+    def find_quartile(quartile)
+      sorted = @array.sort
+      return sorted.last if quartile == 4
+      # Source: http://mathworld.wolfram.com/Quartile.html
+      quartile_position = 0.25 * (quartile*sorted.length + 4 - quartile)
+      quartile_int = quartile_position.to_i
+      lower = sorted[quartile_int - 1]
+      upper = sorted[quartile_int]
+      lower + (upper - lower) * (quartile_position - quartile_int)
+    end # def find_quartile
+
+    def compute_iqr
+      return find_quartile(3) - find_quartile(1)
+    end # def compute_iqr
+
+    def compute_mad
       absdev = []
-      median = compute_median(array)
-      array.each {|n|
+      median = compute_median(@array)
+      @array.each {|n|
         absdev.push((n-median).abs)
       }
       return compute_median(absdev)
@@ -34,24 +56,23 @@ module SummaryTools
       array.length.odd? ? sorted[mid] : 0.5 * (sorted[mid] + sorted[mid-1])
     end # def compute_median
 
-    def perform(array)
-      check_type(array)
-
+    def describe
       stats = {}
-      stats[:mean] = array.inject(:+).to_f / array.length
+      stats[:mean] = @array.inject(:+).to_f / @array.length
 
       sd = sdaccum
       tmp = []
-      array.each {|n| tmp.push(sd.call(n))}
+      @array.each {|n| tmp.push(sd.call(n))}
       stats[:stddev] = tmp.last
 
-      stats[:min] = array.min
-      stats[:max] = array.max
-      stats[:median] = compute_median(array)
-      stats[:mad] = compute_mad(array)
+      stats[:min] = @array.min
+      stats[:max] = @array.max
+      stats[:median] = compute_median(@array)
+      stats[:mad] = compute_mad
+      stats[:iqr] = compute_iqr
       return stats
     end # def perform
 
-    public(:perform)
+    public(:initialize, :describe)
   end # class Describer
 end # module SummaryTools

@@ -9,8 +9,8 @@ module SummaryTools
     #
     # @return [Hash]
     def descr(array)
-      d = Describer.new
-      d.perform(array)
+      d = Describer.new(array)
+      d.describe
     end # def descr
 
   end # class Self
