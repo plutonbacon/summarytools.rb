@@ -1,28 +1,33 @@
 module SummaryTools
   class Describer
 
-    attr_reader :array
+    attr_reader :data
 
     private
 
-    def initialize(_array)
-      check_type(_array)
-      @array = _array
+    def initialize(_data)
+      check_type(_data)
+      @data = _data
     end # def initialize
 
-    def check_type(array)
-      array.each { |e|
+    def check_type(data)
+      data.each { |e|
         raise TypeError, "Nonnumeric contents detected" if !e.kind_of?(Numeric)
       }
     end # def check_type
 
+    def compute_kurtosis(mean)
+      fo = @data.inject(0){|a,x| a + ((x - mean) ** 4)}
+      fo.quo((@data.size) * compute_stddev ** 4) - 3
+    end # compute_kurtosis
+
     def compute_skewness(mean)
-      th=@array.inject(0){|a,x| a+((x-mean)**3)}
-      th.quo((@array.size)*compute_stddev**3)
+      th = @data.inject(0){|a,x| a + ((x - mean) ** 3)}
+      th.quo((@data.size) * compute_stddev ** 3)
     end # compute_skewness
 
     def find_quartile(quartile)
-      sorted = @array.sort
+      sorted = @data.sort
       return sorted.last if quartile == 4
       # Source: http://mathworld.wolfram.com/Quartile.html
       quartile_position = 0.25 * (quartile*sorted.length + 4 - quartile)
@@ -38,8 +43,8 @@ module SummaryTools
 
     def compute_mad
       absdev = []
-      median = compute_median(@array)
-      @array.each {|n|
+      median = compute_median(@data)
+      data.each {|n|
         absdev.push((n-median).abs)
       }
       return compute_median(absdev)
@@ -55,30 +60,31 @@ module SummaryTools
       end
     end # def sdaccum
 
-    def compute_median(array)
-      mid = array.length / 2
-      sorted = array.sort
-      array.length.odd? ? sorted[mid] : 0.5 * (sorted[mid] + sorted[mid-1])
+    def compute_median(data)
+      mid = data.length / 2
+      sorted = data.sort
+      @data.length.odd? ? sorted[mid] : 0.5 * (sorted[mid] + sorted[mid-1])
     end # def compute_median
 
     def compute_stddev
       sd  = sdaccum
       tmp = []
-      @array.each {|n| tmp.push(sd.call(n))}
+      @data.each {|n| tmp.push(sd.call(n))}
       return tmp.last
     end # def compute_stddev
 
     def describe
       stats = {}
-      stats[:mean]       = @array.inject(:+).to_f / @array.length
+      stats[:mean]       = @data.inject(:+).to_f / @data.length
       stats[:stddev]     = compute_stddev
-      stats[:min]        = @array.min
-      stats[:max]        = @array.max
-      stats[:median]     = compute_median(@array)
+      stats[:min]        = @data.min
+      stats[:max]        = @data.max
+      stats[:median]     = compute_median(data)
       stats[:mad]        = compute_mad
       stats[:iqr]        = compute_iqr
       stats[:cv]         = stats[:stddev] / stats[:mean].abs
       stats[:skewness]   = compute_skewness(stats[:mean])
+      stats[:kurtosis]   = compute_kurtosis(stats[:mean])
       return stats
     end # def describe
 

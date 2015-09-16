@@ -37,4 +37,8 @@ describe '.descr' do
     expect(ss[:skewness]).to eq(0)
   end
 
+  it 'computes the correct kurtosis of the simple array = [1, 2, 3, 4, 5]' do
+    expect(ss[:kurtosis]).to eq(-1.3000000000000003)
+  end
+
 end
