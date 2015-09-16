@@ -33,4 +33,8 @@ describe '.descr' do
     expect(ss[:cv]).to eq(0.47140452079103173)
   end
 
+  it 'computes the correct skewness of the simple array = [1, 2, 3, 4, 5]' do
+    expect(ss[:skewness]).to eq(0)
+  end
+
 end
