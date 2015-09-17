@@ -6,7 +6,7 @@ describe '.descr' do
   end
 
   it 'computes the correct standard deviation of the simple array = [1, 2, 3, 4, 5]' do 
-    expect(ss[:stddev]).to eq(1.4142135623730951)
+    expect(ss[:stddev]).to eq(1.5811388300841898)
   end
 
   it 'computes the correct min of the simple array = [1, 2, 3, 4, 5]' do
@@ -30,7 +30,7 @@ describe '.descr' do
   end
 
   it 'computes the correct coefficient of variation of the simple array = [1, 2, 3, 4, 5]' do
-    expect(ss[:cv]).to eq(0.47140452079103173)
+    expect(ss[:cv]).to eq(0.5270462766947299)
   end
 
   it 'computes the correct skewness of the simple array = [1, 2, 3, 4, 5]' do

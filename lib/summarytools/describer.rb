@@ -18,12 +18,12 @@ module SummaryTools
 
     def compute_kurtosis(mean)
       fo = @data.inject(0){|a,x| a + ((x - mean) ** 4)}
-      fo.quo((@data.size) * compute_stddev ** 4) - 3
+      fo.quo((@data.size) * @data.sd ** 4) - 3
     end # compute_kurtosis
 
     def compute_skewness(mean)
       th = @data.inject(0){|a,x| a + ((x - mean) ** 3)}
-      th.quo((@data.size) * compute_stddev ** 3)
+      th.quo((@data.size) * @data.sd ** 3)
     end # compute_skewness
 
     def find_quartile(quartile)
@@ -50,33 +50,16 @@ module SummaryTools
       return compute_median(absdev)
     end # def compute_mad
 
-    def sdaccum
-      n, sum, sum2 = 0, 0.0, 0.0
-      lambda do |num|
-        n += 1
-        sum += num
-        sum2 += num**2
-        Math.sqrt((sum2/n)-(sum/n)**2)
-      end
-    end # def sdaccum
-
     def compute_median(data)
       mid = data.length / 2
       sorted = data.sort
       @data.length.odd? ? sorted[mid] : 0.5 * (sorted[mid] + sorted[mid-1])
     end # def compute_median
 
-    def compute_stddev
-      sd  = sdaccum
-      tmp = []
-      @data.each {|n| tmp.push(sd.call(n))}
-      return tmp.last
-    end # def compute_stddev
-
     def describe
       stats = {}
-      stats[:mean]       = @data.inject(:+).to_f / @data.length
-      stats[:stddev]     = compute_stddev
+      stats[:mean]       = @data.mean
+      stats[:stddev]     = @data.sd
       stats[:min]        = @data.min
       stats[:max]        = @data.max
       stats[:median]     = compute_median(data)

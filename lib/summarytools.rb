@@ -1,4 +1,5 @@
 require 'summarytools/version'
+require 'summarytools/core_extensions/enumerable'
 require 'summarytools/describer'
 
 module SummaryTools
