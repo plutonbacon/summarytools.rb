@@ -6,7 +6,7 @@ describe '.descr' do
   end
 
   it 'computes the correct standard deviation of the simple array = [1, 2, 3, 4, 5]' do 
-    expect(ss[:stddev]).to eq(1.5811388300841898)
+    expect(ss[:sd]).to eq(1.5811388300841898)
   end
 
   it 'computes the correct min of the simple array = [1, 2, 3, 4, 5]' do

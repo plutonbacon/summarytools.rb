@@ -6,23 +6,16 @@ module SummaryTools
     private
 
     def initialize(_data)
-      check_type(_data)
       @data = _data
     end # def initialize
 
-    def check_type(data)
-      data.each { |e|
-        raise TypeError, "Nonnumeric contents detected" if !e.kind_of?(Numeric)
-      }
-    end # def check_type
-
-    def compute_kurtosis(mean)
-      fo = @data.inject(0){|a,x| a + ((x - mean) ** 4)}
+    def compute_kurtosis
+      fo = @data.inject(0) { |accum, x| accum + ((x - @data.mean) ** 4)}
       fo.quo((@data.size) * @data.sd ** 4) - 3
     end # compute_kurtosis
 
-    def compute_skewness(mean)
-      th = @data.inject(0){|a,x| a + ((x - mean) ** 3)}
+    def compute_skewness
+      th = @data.inject(0){|a,x| a + ((x - @data.mean) ** 3)}
       th.quo((@data.size) * @data.sd ** 3)
     end # compute_skewness
 
@@ -43,31 +36,24 @@ module SummaryTools
 
     def compute_mad
       absdev = []
-      median = compute_median(@data)
       data.each {|n|
-        absdev.push((n-median).abs)
+        absdev.push((n - @data.median).abs)
       }
-      return compute_median(absdev)
+      return absdev.median
     end # def compute_mad
-
-    def compute_median(data)
-      mid = data.length / 2
-      sorted = data.sort
-      @data.length.odd? ? sorted[mid] : 0.5 * (sorted[mid] + sorted[mid-1])
-    end # def compute_median
 
     def describe
       stats = {}
       stats[:mean]       = @data.mean
-      stats[:stddev]     = @data.sd
+      stats[:sd]         = @data.sd
       stats[:min]        = @data.min
       stats[:max]        = @data.max
-      stats[:median]     = compute_median(data)
+      stats[:median]     = @data.median
       stats[:mad]        = compute_mad
       stats[:iqr]        = compute_iqr
-      stats[:cv]         = stats[:stddev] / stats[:mean].abs
-      stats[:skewness]   = compute_skewness(stats[:mean])
-      stats[:kurtosis]   = compute_kurtosis(stats[:mean])
+      stats[:cv]         = stats[:sd] / stats[:mean].abs
+      stats[:skewness]   = compute_skewness
+      stats[:kurtosis]   = compute_kurtosis
       return stats
     end # def describe
 
