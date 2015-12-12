@@ -1,11 +1,11 @@
 module SummaryTools
   # Current major release.
   # @return [Integer]
-  MAJOR = 0
+  MAJOR = 1
 
   # Current minor release.
   # @return [Integer]
-  MINOR = 1
+  MINOR = 0
 
   # Current patch level.
   # @return [Integer]
