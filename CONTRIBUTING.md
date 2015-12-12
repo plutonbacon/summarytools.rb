@@ -4,8 +4,8 @@
 
 Before submitting a new issue, please do the following:
 
-- Verify you are running the latest version by running `summarytools -v` and compare it with the [project page on GitHub](https://github.com/mpellon/summarytools.rb).
-- Make sure to read through the [README](https://github.com/mpellon/summarytools.rb) of the project.
+- Verify you are running the latest version by running `summarytools -v` and compare it with the [project page on GitHub](https://github.com/plutonbacon/summarytools.rb).
+- Make sure to read through the [README](https://github.com/plutonbacon/summarytools.rb) of the project.
 
 When submitting a new issue, please provide the following information:
 

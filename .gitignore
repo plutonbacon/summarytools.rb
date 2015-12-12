@@ -1,4 +1,5 @@
 # RubyGems-related
 .bundle/
 Gemfile.lock
+pkg/
 vendor/

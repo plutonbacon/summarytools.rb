@@ -6,10 +6,10 @@ require 'summarytools/version'
 Gem::Specification.new do |spec|
   spec.name          = "summarytools"
   spec.version       = SummaryTools::VERSION
-  spec.authors       = ['Michael Pellon']
-  spec.email         = ['m@pellon.io']
+  spec.authors       = ['plutonbacon']
+  spec.email         = ['plutonbacon@dynosoft.org']
   spec.summary       = 'A pure Ruby port of Dominic Comtois excellent R package.'
-  spec.homepage      = 'https://github.com/mpellon/summarytools.rb'
+  spec.homepage      = 'https://github.com/plutonbacon/summarytools.rb'
   spec.license       = 'MIT'
 
   spec.required_ruby_version = '>= 2.0.0'
