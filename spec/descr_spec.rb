@@ -1,6 +1,10 @@
 describe '.descr' do
   let(:ss) { SummaryTools.descr([1, 2, 3, 4, 5]) }
 
+  it 'computes the correct count of the simply array = [1, 2, 3, 4, 5]' do
+    expect(ss[:count]).to eq(5)
+  end
+
   it 'computes the correct mean of the simple array = [1, 2, 3, 4, 5]' do
     expect(ss[:mean]).to eq(3.0)
   end

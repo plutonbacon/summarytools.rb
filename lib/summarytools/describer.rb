@@ -44,6 +44,7 @@ module SummaryTools
 
     def describe
       stats = {}
+      stats[:count]      = @data.size
       stats[:mean]       = @data.mean
       stats[:sd]         = @data.sd
       stats[:min]        = @data.min
